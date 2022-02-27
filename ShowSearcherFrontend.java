@@ -140,18 +140,18 @@ public class ShowSearcherFrontend implements IShowSearcherFrontend{
 			
 			//lines 119-138 run the toggling changes the user enters
 			if(input.equals("1") || input.equals("N")) {
-				backend.toggleProviderFilter("netflix");
+				backend.toggleProviderFilter("Netflix");
 			}
 			else if(input.equals("2") || input.equals("H")) {
-				backend.toggleProviderFilter("hulu");
+				backend.toggleProviderFilter("Hulu");
 
 			}
 			else if(input.equals("3") || input.equals("P")) {
-				backend.toggleProviderFilter("prime video");
+				backend.toggleProviderFilter("Prime Video");
 
 			}
 			else if(input.equals("4") || input.equals("D")) {
-				backend.toggleProviderFilter("disney+");
+				backend.toggleProviderFilter("Disney+");
 			}
 			else if(input.equals("Q")) {
 				
@@ -193,16 +193,16 @@ public class ShowSearcherFrontend implements IShowSearcherFrontend{
 			String provider;//there is no get provider method in IShow so we 
 			//must find the values current toggling values of each of the current providers.
 			//This is done right before printing the shows
-			if(shows.get(i).isAvailableOn("netflix")) {
+			if(shows.get(i).isAvailableOn("Netflix")) {
 				provider = "Netflix";
 			}
-			else if(shows.get(i).isAvailableOn("hulu")) {
+			else if(shows.get(i).isAvailableOn("Hulu")) {
 				provider = "Hulu";
 			}
-			else if(shows.get(i).isAvailableOn("prime video")) {
+			else if(shows.get(i).isAvailableOn("Prime Video")) {
 				provider = "Prime Video";
 			}
-			else if(shows.get(i).isAvailableOn("disney+")) {
+			else if(shows.get(i).isAvailableOn("Disney+")) {
 				provider = "Disney+";
 			}
 			else {

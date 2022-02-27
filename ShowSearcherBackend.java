@@ -5,6 +5,7 @@
 // Lecture #: 004 @4:00pm
 // Notes to Grader: Algorithm Engineer did not communicate with me, Frontend Engineer did
 import java.util.List;
+import java.util.NoSuchElementException;
 
 /**
  * Implements IShowSearcherBackend for the backend functionality of the program
@@ -18,7 +19,7 @@ public class ShowSearcherBackend implements IShowSearcherBackend {
     //Hashtable 2 used for searching when given a title word
     HashTableSortedSets<String, IShow> title;
     //Sample list of providers
-    private final String[] providers = {"netflix", "prime video", "hulu", "disney+"};
+    private final String[] providers = {"Netflix", "Prime Video", "Hulu", "Disney+"};
     //The filtering status of the provider in the corresponding index of providers, default is inclusion
     boolean[] filterStatus = {true, true, true, true};
 
@@ -97,7 +98,7 @@ public class ShowSearcherBackend implements IShowSearcherBackend {
      */
     @Override
     public void setProviderFilter(String provider, boolean filter) {
-        int i = findProviderIndex(provider.toLowerCase());
+        int i = findProviderIndex(provider);
         if (i != -1) {
             filterStatus[i] = filter;
         }
@@ -125,7 +126,7 @@ public class ShowSearcherBackend implements IShowSearcherBackend {
      */
     @Override
     public void toggleProviderFilter(String provider) {
-        int i = findProviderIndex(provider.toLowerCase());
+        int i = findProviderIndex(provider);
         if (i == -1) return;
         else {
             filterStatus[i] = !filterStatus[i];
@@ -146,12 +147,17 @@ public class ShowSearcherBackend implements IShowSearcherBackend {
         //but case sensitivity does not matter
         word = word.toLowerCase();
         //Now, get all results that have word in the title of the show
-        List<IShow> shows = title.get(word);
-        //If there are no shows that match our criteria, we return null
-        if (shows == null) return null;
-        shows = filterShows(shows);
-        if (shows.size() == 0) return null;
-        return shows;
+        try {
+            List<IShow> shows = title.get(word);
+            //If there are no shows that match our criteria, we return null
+            if (shows == null) return null;
+            shows = filterShows(shows);
+            if (shows.size() == 0) return null;
+            return shows;
+        } catch (NoSuchElementException e){
+            //Search didn't have any terms that matched, return null
+            return null;
+        }
     }
 
     /**
@@ -181,10 +187,15 @@ public class ShowSearcherBackend implements IShowSearcherBackend {
      */
     @Override
     public List<IShow> searchByYear(int year) {
-        List<IShow> shows = this.year.get(year);
-        if (shows == null) return null;
-        shows = filterShows(shows);
-        if (shows.size() == 0) return null;
-        return shows;
+        try {
+            List<IShow> shows = this.year.get(year);
+            if (shows == null) return null;
+            shows = filterShows(shows);
+            if (shows.size() == 0) return null;
+            return shows;
+        } catch (NoSuchElementException e){
+            //no shows with search year
+            return null;
+        }
     }
 }
