@@ -68,11 +68,11 @@ public class TestShowSearcherBackend {
     private static boolean test2() {
         //test year functionality
         ShowSearcherBackend backend = new ShowSearcherBackend();
-        IShow show1 = new IShow("Attack on Titan", "Netflix Hulu", 2002, 99);
-        IShow show2 = new IShow("Adventure Time: with Finn and Jake", "Disney+", 2, 1);
-        IShow show3 = new IShow("M.D.D.E.L.", "Netflix Prime Video", 12098, 290382);
-        IShow show4 = new IShow("Jake and Bake, the titan shifter", "Prime Video", 999, 999);
-        IShow show5 = new IShow("Snakes on a Plane: And DONUTS!!!", "Netflix", 2002, 2092);
+        IShow show1 = new Show("Attack on Titan",  2002, 99, "Netflix Hulu");
+        IShow show2 = new Show("Adventure Time: with Finn and Jake", 2, 1, "Disney+");
+        IShow show3 = new Show("M.D.D.E.L.", 12098, 290382, "Netflix Prime Video");
+        IShow show4 = new Show("Jake and Bake, the titan shifter", 999, 999, "Prime Video");
+        IShow show5 = new Show("Snakes on a Plane: And DONUTS!!!", 2002, 2092, "Netflix");
         //Should only return 2 values, show1 and show 5
         List<IShow> nostalgicMovies = backend.searchByYear(2002);
         if (nostalgicMovies.size() != 2) return false;
@@ -99,11 +99,11 @@ public class TestShowSearcherBackend {
      */
     private static boolean test3() {
         //test funcitonality of add method
-        IShow show1 = new IShow("Attack on Titan", "Netflix Hulu", 2002, 99);
-        IShow show2 = new IShow("Adventure Time: with Finn and Jake", "Disney+", 2, 1);
-        IShow show3 = new IShow("M.D.D.E.L.", "Netflix Prime Video", 12098, 290382);
-        IShow show4 = new IShow("Jake and Bake, the titan shifter", "Prime Video", 999, 999);
-        IShow show5 = new IShow("Snakes on a Plane: And DONUTS!!!", "Netflix", 2002, 2092);
+        IShow show1 = new Show("Attack on Titan",  2002, 99, "Netflix Hulu");
+        IShow show2 = new Show("Adventure Time: with Finn and Jake", 2, 1, "Disney+");
+        IShow show3 = new Show("M.D.D.E.L.", 12098, 290382, "Netflix Prime Video");
+        IShow show4 = new Show("Jake and Bake, the titan shifter", 999, 999, "Prime Video");
+        IShow show5 = new Show("Snakes on a Plane: And DONUTS!!!", 2002, 2092, "Netflix");
         ShowSearcherBackend backend = new ShowSearcherBackend();
         backend.addShow(show1);
         backend.addShow(show2);
@@ -117,7 +117,7 @@ public class TestShowSearcherBackend {
         backend.searchByTitleWord("nsljfaljeifnasd");
         backend.getProviderFilter("hulu");
         if (backend.getNumberOfShows() != 5) return false;
-        backend.addShow(new IShow("lkasjdfj", "Prime Video", 283, 2));
+        backend.addShow(new Show("lkasjdfj", 283, 2, "Prime Video"));
         if (backend.getNumberOfShows() != 6) return false;
         return true;
     }
