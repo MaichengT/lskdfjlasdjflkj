@@ -1,68 +1,93 @@
-// --== CS400 Project One File Header ==--
-// Name: Braeden Bertz
-// CSL Username: bbertz
-// Email: bbertz@wisc.edu
-// Lecture #: 004 @4:00pm
-// Notes to Grader: Algorithm Engineer did not communicate with me, Frontend Engineer did
+import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collection;
+import java.util.LinkedList;
 import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.Collections;
 
-public class HashTableSortedSets<KeyType,ValueType>{
-    ArrayList<ValueType> addedShows = new ArrayList<>();
+/**
+ * @author trama
+ *
+ * @param <KeyType> the type of the given key
+ * @param <ValueType> the type of the associated value of the given key 
+ */
+public class HashTableSortedSets<KeyType, ValueType extends Comparable<ValueType>>
+		extends HashtableMap<KeyType, ValueType> implements IHashTableSortedSets<KeyType, ValueType> {
+	
 
-    IShow[] testShows = {new IShow("Attack on Titan", "Netflix Hulu", 2002, 99),
-            new IShow("Adventure Time: with Finn and Jake", "Disney+", 2, 1),
-            new IShow("M.D.D.E.L.", "Netflix Prime Video", 12098, 290382),
-            new IShow("Jake and Bake, the titan shifter", "Prime Video", 999, 999),
-            new IShow("Snakes on a Plane: And DONUTS!!!", "Netflix", 2002,2092),
-    };
+	/**
+	 * Adding keys into hashtable
+	 * @param key the given key
+	 * @param value the associate value of the give key
+	 */
+	@Override
+	public void add(KeyType key, ValueType value) {
+		// get the index of the given key
+		int keyIndex = getHashIndex(key);
+		// create a list of values have same keys
+		List<ValueType> tmp;
+		// if key or value or null return immediately
+		if (key == null || value == null) {
+			return;
+		}
+		
+		
+		else if (arrays[keyIndex] == null) {
+			// create new LinkedList at index
+			arrays[keyIndex] = new LinkedList<HashNode<KeyType, List<ValueType>>>();
+			// create a list of values have same keys
+			tmp = new ArrayList<ValueType>();
+			// add the first value into the list of values having same keys
+			tmp.add(value);
 
-    public void add(KeyType key, ValueType value) {
-        addedShows.add(value);
-    }
+			// create a node pair both key and list of values
+			HashNode<KeyType, List<ValueType>> hashnode = new HashNode<KeyType, List<ValueType>>(key, tmp);
 
+			// add the hashnode into hashtable
+			arrays[keyIndex].add((HashNode<KeyType, List<ValueType>>) hashnode);
+			// increment the size
+			size++;
+			// rehase if needed
+			if ((double) size >= ((double) capacity * DEFAULT_CAPACITY)) {
+				// resize the hastable
+				resize();
+			}
+		} 
+		
+		else {
+			// traverse the list of values
+			for (int i = 0; i < arrays[keyIndex].size(); i++) {
+				// if the key of arrays[keyIndex] equals the given key 
+				if (arrays[keyIndex].contains(key)) {
+					// adding the given value into the list of values
+					tmp = arrays[keyIndex].get(i).getValue();
 
-    public boolean put(KeyType key, List<ValueType> value) {
-        return false;
-    }
+					int ind = 0;
+					// sorting in the desending order
+					for (ind = 0; ind < tmp.size(); ind++) {
+						if (value.compareTo(tmp.get(ind)) < 0) {
+							continue;
+						}
+						if (value.compareTo(tmp.get(ind)) >= 0) {
+							break;
+						}
+					}
+				}
+			}
+			// create a new LinkedList at index
+			arrays[keyIndex] = new LinkedList<HashNode<KeyType, List<ValueType>>>();
+			// create a new list of values
+			tmp = new ArrayList<ValueType>();
+			// add the value of the list of values
+			tmp.add(value);
+			
+			HashNode<KeyType, List<ValueType>> hashnode = new HashNode<KeyType, List<ValueType>>(key, tmp);
+			// add the hashnode into the hashtable
+			arrays[keyIndex].add(hashnode);
+			// increment the size
+			size++;
+		}
 
+	}
 
-    public List<ValueType> get(KeyType key) throws NoSuchElementException {
-        if (key.equals("and")) {
-            IShow[] retVal = new IShow[]{testShows[1], testShows[3], testShows[4]};
-            return (List<ValueType>) new ArrayList<IShow>(Arrays.asList(retVal));//problem, cannot add or remove from this list
-        }
-        if (key.equals(2002)) {
-            IShow[] retVal = new IShow[]{testShows[0], testShows[4]};
-
-            return (List<ValueType>) new ArrayList<IShow>(Arrays.asList(retVal));
-        }
-        if (key.equals("i")){
-            IShow[] retVal = new IShow[]{testShows[0], testShows[1], testShows[2], testShows[3]};
-            return (List<ValueType>) new ArrayList<IShow>(Arrays.asList(retVal));
-        }
-        return null;
-    }
-
-
-    public int size() {
-        return addedShows.size();
-    }
-
-
-    public boolean containsKey(KeyType key) {
-        return false;
-    }
-
-
-    public List<ValueType> remove(KeyType key) {
-        return null;
-    }
-
-
-    public void clear() {
-
-    }
 }
