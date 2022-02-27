@@ -95,25 +95,25 @@ public class ShowSearcherFrontend implements IShowSearcherFrontend{
 			String h;//hulu toggle
 			String p;//prime toggle
 			String d;//disney toggle
-			if(backend.getProviderFilter("netflix")) {
+			if(backend.getProviderFilter("Netflix")) {
 				n = "x";
 			}
 			else {
 				n = "_";
 			}
-			if(backend.getProviderFilter("hulu")) {
+			if(backend.getProviderFilter("Hulu")) {
 				h = "x";
 			}
 			else {
 				h = "_";
 			}
-			if(backend.getProviderFilter("prime video")) {
+			if(backend.getProviderFilter("Prime Video")) {
 				p = "x";
 			}
 			else {
 				p = "_";
 			}
-			if(backend.getProviderFilter("disney+")) {
+			if(backend.getProviderFilter("Disney+")) {
 				d = "x";
 			}
 			else {

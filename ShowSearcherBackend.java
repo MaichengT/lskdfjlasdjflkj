@@ -111,7 +111,7 @@ public class ShowSearcherBackend implements IShowSearcherBackend {
      */
     @Override
     public boolean getProviderFilter(String provider) {
-        int i = findProviderIndex(provider.toLowerCase());
+        int i = findProviderIndex(provider);
         if(i == -1) {
             //provider wasn't in the predefined list of providers, idk what to do
             return false;
