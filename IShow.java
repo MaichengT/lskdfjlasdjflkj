@@ -1,39 +1,19 @@
-// --== CS400 Project One File Header ==--
-// Name: Braeden Bertz
-// CSL Username: bbertz
-// Email: bbertz@wisc.edu
-// Lecture #: 004 @4:00pm
-// Notes to Grader: Algorithm Engineer did not communicate with me, Frontend Engineer did
 
 /**
- * Placeholder class for IShow implementation (i.e., Show)
+ * Instances of classes that implement this interface represent a single 
+ * streaming show object that can be stored, sorted, and searched for based on 
+ * these accessors below.
  */
-public class IShow {
-    private String title;
-    private String providers;
-    private int year;
-    private int rating;
+public interface IShow extends Comparable<IShow> {
 
-    IShow(String t, String p, int y, int r){
-        title = t;
-        providers = p.toLowerCase();
-        year = y;
-        rating = r;
-    }
+    // constructor args (String title, int year, int rating, String providers)
+    // where the providers string includes the names of every streaming source
 
-        public String getTitle() {
-        return title;
-    }
+    String getTitle(); // retrieve the title of this show object
+    int getYear(); // retrieve the year that this show was first produced
+    int getRating(); // retrieve the Rotten Tomatoes Rating (out of 100)
+    boolean isAvailableOn(String provider); // checks show availability
 
-        public int getYear() {
-        return year;
-    }
+    // compareTo() method supports sorting shows in descending order by rating
 
-        public int getRating() {
-        return rating;
-    }
-
-        public boolean isAvailableOn(String provider) {
-        return this.providers.contains(provider.toLowerCase());
-    }
 }
