@@ -18,9 +18,9 @@ public class ShowSearcherApp {
      * @param args args
      */
     public static void main(String[] args) {
-        IShowLoader loader = new ShowLoader(); //new ShowLoader();
+        ShowLoader loader = new ShowLoader(); //new ShowLoader();
         try {
-            List<IShow> shows = loader.loadShows("data/tv_shows.csv");
+            List<IShow> shows = loader.loadShows("src/shows_test.csv");
             ShowSearcherBackend backend = new ShowSearcherBackend(); //new ShowSearcherBackend();
             for (IShow show : shows) backend.addShow(show);
             ShowSearcherFrontend frontend = new ShowSearcherFrontend(backend); //new ShowSearcherFrontend(backend);
