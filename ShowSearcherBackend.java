@@ -54,11 +54,24 @@ public class ShowSearcherBackend implements IShowSearcherBackend {
         //Add each of the words in the title to the title hashtable so that
         //if the user inputs any of the words in the show, they will
         //get the show back from the hashtable
+        //For special titles i.e. "Hello, carla" we want the user to be able to search "hello" or "carla" or "hello,"
+        //so we can also add the words with their special characters added
         String[] titleWordsInShow = show.getTitle().split(" ");
         for (String titleWord : titleWordsInShow) {
             titleWord = titleWord.toLowerCase();
+
             title.add(titleWord, show);
+            String spcialTitle = formatSpecialWord(titleWord);
+            if (!titleWord.equals(spcialTitle)) title.add(spcialTitle, show);
         }
+    }
+
+    private String formatSpecialWord(String titleWord) {
+        char[] specialCharcters = {',', '?', '"', '\\', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '{','}', '`', '~', ',','.'};
+        for (Character c : specialCharcters) {
+            if (titleWord.contains(""+c)) titleWord = titleWord.replaceAll(""+c,"");
+        }
+        return titleWord;
     }
 
     /**
