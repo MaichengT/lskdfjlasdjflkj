@@ -9,7 +9,7 @@ import java.util.List;
 // Email: attran4@wisc.edu
 // Lecture #: 004 @4:00pm
 // Notes to Grader: <any optional extra notes to your grader>
-public class HashtableMap<KeyType, ValueType> implements MapADT<KeyType, List<ValueType>>{
+public class HashtableMap<KeyType, ValueType> implements MapADT<KeyType, List<ValueType>> {
 
 	// data fields
 	protected int size;
@@ -18,9 +18,8 @@ public class HashtableMap<KeyType, ValueType> implements MapADT<KeyType, List<Va
 
 	protected LinkedList<HashNode<KeyType, List<ValueType>>>[] arrays;
 
-
 	/**
-	 * Default constructor 
+	 * Default constructor
 	 */
 	@SuppressWarnings("unchecked")
 	public HashtableMap() {
@@ -31,7 +30,6 @@ public class HashtableMap<KeyType, ValueType> implements MapADT<KeyType, List<Va
 		// set size to 0
 		this.size = 0;
 	}
-
 
 	/**
 	 * Constructor with assigned capacity
@@ -47,7 +45,6 @@ public class HashtableMap<KeyType, ValueType> implements MapADT<KeyType, List<Va
 		this.size = 0;
 	}
 
-	
 	/**
 	 * Get the index by input key
 	 * 
@@ -57,7 +54,6 @@ public class HashtableMap<KeyType, ValueType> implements MapADT<KeyType, List<Va
 	protected int getHashIndex(Object key) {
 		return Math.abs(key.hashCode()) % capacity;
 	}
-
 
 	/**
 	 * Resize the hash table arrays
@@ -69,7 +65,7 @@ public class HashtableMap<KeyType, ValueType> implements MapADT<KeyType, List<Va
 		capacity = capacity * 2;
 		// create a doubled capacity Hash Table
 		LinkedList<HashNode<KeyType, List<ValueType>>>[] tmp = new LinkedList[capacity];
-		
+
 		// copy the existed key into appropriate index of new HashTable
 		for (int i = 0; i < arrays.length; i++) {
 			if (arrays[i] != null) {
@@ -92,19 +88,17 @@ public class HashtableMap<KeyType, ValueType> implements MapADT<KeyType, List<Va
 		arrays = tmp;
 	}
 
-	
-
 	/**
 	 * Getting existed key inside the arrays
+	 * 
 	 * @param key given key
-	 * @throws NoSuchElementException 
-	 * @return null if that hashnode doesn't exist; otherwise, return the value of that key
+	 * @throws NoSuchElementException
+	 * @return null if that hashnode doesn't exist; otherwise, return the value of
+	 *         that key
 	 */
 	public List<ValueType> get(Object key) throws NoSuchElementException {
 		int index = getHashIndex(key);
-		//System.out.println(index);
-		//System.out.println(arrays.length);
-		//System.out.println(arrays[index]);
+		List<ValueType> returnVal = new LinkedList<ValueType>();
 		// check if the hashnode is null
 		if (arrays[index] == null) {
 			throw new NoSuchElementException("Cannot find the key.");
@@ -113,10 +107,12 @@ public class HashtableMap<KeyType, ValueType> implements MapADT<KeyType, List<Va
 		for (int i = 0; i < arrays[index].size(); i++) {
 			// check if they are equal
 			if (arrays[index].get(i).getKey().equals(key)) {
-				return (List<ValueType>) arrays[index].get(i).getValue();
+				returnVal.addAll(arrays[index].get(i).getValue());
 			}
 		}
-		throw new NoSuchElementException("Cannot find the key.");
+
+		return (List<ValueType>) returnVal;
+
 	}
 
 	/**
@@ -170,6 +166,7 @@ public class HashtableMap<KeyType, ValueType> implements MapADT<KeyType, List<Va
 
 	/**
 	 * Return the actual size
+	 * 
 	 * @return the size of the array
 	 */
 	public int size() {
@@ -186,7 +183,6 @@ public class HashtableMap<KeyType, ValueType> implements MapADT<KeyType, List<Va
 		}
 		this.size = 0;
 	}
-
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -207,7 +203,7 @@ public class HashtableMap<KeyType, ValueType> implements MapADT<KeyType, List<Va
 			arrays[index].add((HashNode<KeyType, List<ValueType>>) hashnode);
 
 		}
-		
+
 		// increment the size
 		size++;
 
@@ -219,6 +215,5 @@ public class HashtableMap<KeyType, ValueType> implements MapADT<KeyType, List<Va
 		return true;
 
 	}
-
 
 }
